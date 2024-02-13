@@ -1,0 +1,29 @@
+#back{
+float:right;
+color:black;
+}
+#back_text{
+    color:black;
+
+}
+#button{
+  border: 10px;
+}
+
+.heading{
+  width:100%;
+  font-size: 25px;
+
+  margin-top:0px;
+
+}
+
+body{
+  background-size:cover;
+
+}
+
+.pressme{
+  width:100px;
+  font-size: 15;
+}

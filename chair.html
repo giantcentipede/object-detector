@@ -1,0 +1,88 @@
+<html>
+<head>
+
+	<title>chair</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body background="idk3.png">
+  <center>
+    <h1 class="btn btn-info heading">chair</h1>
+
+    <h3 id="status" class="btn btn-info"></h3>
+    <h3 class="btn btn-success">there are 1 object detected</h3>
+  </center>
+
+   <h3 id="back" class="btn btn-danger">
+    <a href="index.html" id="back_text">back</a>
+   </h3>
+  <script>
+    img=""
+status=''
+objects=[];
+
+function preload() {
+img=loadImage("chair.jpg");
+}
+
+function setup() {
+canvas=createCanvas(640,420);
+canvas.center();
+
+objectDetector=ml5.objectDetector("cocossd",modelLoaded);
+document.getElementById("status").innerHTML="status:detecting objects";
+
+
+}
+
+function modelLoaded() {
+    console.log("modelLoaded");
+    status=true;
+    objectDetector.detect(img,gotresults);
+
+}
+
+function draw() {
+image(img,0,0,640,420);
+if (status!="") {
+for (i=0; i<objects.length; i++) {
+    document.getElementById("status").innerHTML="status:objects detected";
+
+    fill(255, 0, 0);
+    percent=floor(objects[i].confidence*100);
+    text(objects[i].label+" "+percent+"%",objects[i].x+5,objects[i].y+15);
+    noFill();
+stroke(255,0,0);
+rect(objects[i].x,objects[i].y,objects[i].width,objects[i].height);
+
+}
+}
+
+
+}
+
+function gotresults(error,results) {
+    if (error) {
+        console.log(error);
+
+    }
+
+    else {
+        console.log(results);
+        objects=results;
+
+    }
+}
+  </script>
+
+</body>
+</html>
